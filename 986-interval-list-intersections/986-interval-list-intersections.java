@@ -12,11 +12,7 @@ class Solution {
             
             if(min<=max) list.add(new int[]{min,max});
             if(arr1[i][1]>arr2[j][1]) j++;
-            else if(arr1[i][1]<arr2[j][1]) i++;
-            else{
-                i++;
-                j++;
-            }
+            else i++;
         }
         return list.toArray(new int[list.size()][]);
     }
