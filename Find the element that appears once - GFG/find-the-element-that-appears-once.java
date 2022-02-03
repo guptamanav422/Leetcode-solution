@@ -30,12 +30,22 @@ class GfG
 
 class Sol
 {
-    public static int search(int A[], int N)
+    public static int search(int arr[], int N)
     {
-        int num=0;
-        for(int a:A){
-            num=num^a;
+        int s=0,e=N-1;
+        while(s<=e){
+            
+            int m=(s+e)/2;
+            
+            if((m==0 || arr[m]!=arr[m-1]) && (m==N-1 || arr[m]!=arr[m+1])) return arr[m];
+            
+            if(m!=0 && arr[m]==arr[m-1]) m--;
+            
+            if((m-s)%2!=0){
+                e=m-1;
+            }
+            else s=m+2;
         }
-        return num;
+        return -1;
     }
 }
