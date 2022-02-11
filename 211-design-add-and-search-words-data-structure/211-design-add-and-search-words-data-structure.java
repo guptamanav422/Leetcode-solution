@@ -1,37 +1,47 @@
 class WordDictionary {
 
     /** Initialize your data structure here. */
-    Map<Integer,List<String>> map;
+    class Node{
+        Node children[];
+        boolean isLast;
+        
+        Node(){
+            children=new Node[26];
+            isLast=false;
+        }
+    }
+    Node root;
     public WordDictionary() {
-        map=new HashMap<>();
+        root=new Node();
     }
     
     public void addWord(String word) {
-        int len=word.length();
-        if(!map.containsKey(len)) map.put(len,new ArrayList<>());
-        map.get(len).add(word);
+        Node a=root;
+        for(int i=0;i<word.length();i++){
+            if(a.children[word.charAt(i)-'a']==null) 
+                a.children[word.charAt(i)-'a']=new Node();
+            a=a.children[word.charAt(i)-'a'];
+        }
+        a.isLast=true;
     }
     
     public boolean search(String word) {
         
-        int len=word.length();
-        if(map.containsKey(len)){
-            
-            for(String str:map.get(len)){
-                
-                boolean flag=true;
-                for(int i=0;i<len;i++){
-                    
-                    if(word.charAt(i)=='.') continue;
-                    if(str.charAt(i)!=word.charAt(i)){
-                        flag=false;
-                        break;
-                    }
-                }
-                if(flag) return true;
+        return check(word,0,word.length(),root);
+    }
+    boolean check(String word,int i,int n,Node temp){
+      
+        if(temp==null) return false;
+        if(i==n) return temp.isLast;
+        
+        if(word.charAt(i)=='.'){
+            boolean flag=false;
+            for(int j=0;j<26 && !flag ;j++){
+                flag=flag | check(word,i+1,n,temp.children[j]);
             }
+            return flag;
         }
-        return false;
+        else return check(word,i+1,n,temp.children[word.charAt(i)-'a']);
     }
 }
 
