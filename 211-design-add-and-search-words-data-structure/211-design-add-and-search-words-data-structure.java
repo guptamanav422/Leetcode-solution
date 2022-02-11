@@ -35,13 +35,12 @@ class WordDictionary {
         if(i==n) return temp.isLast;
         
         if(word.charAt(i)=='.'){
-            boolean flag=false;
-            for(int j=0;j<26 && !flag ;j++){
-                flag=flag | check(word,i+1,n,temp.children[j]);
+            for(int j=0;j<26;j++){
+                if(check(word,i+1,n,temp.children[j])) return true;
             }
-            return flag;
         }
         else return check(word,i+1,n,temp.children[word.charAt(i)-'a']);
+        return false;
     }
 }
 
