@@ -15,12 +15,14 @@ class Solution {
         
         String arr[]=sentence.split(" ");
         StringBuffer sb=new StringBuffer();
+        int i=0;
         for(String str:arr){
             String temp=search(str);
-            if(temp.equals("")) sb.append(str+" ");
-            else sb.append(temp+" ");
+            if(temp.equals("")) arr[i]=str;
+            else arr[i]=temp;
+            i++;
         }
-        return sb.toString().substring(0,sb.length()-1);
+        return String.join(" ",arr);
     }
     String search(String str){
         
