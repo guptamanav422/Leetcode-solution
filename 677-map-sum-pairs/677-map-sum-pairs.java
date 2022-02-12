@@ -2,11 +2,9 @@ class MapSum {
     
     class Node{
         Node children[];
-        boolean isLast;
         int score;
         Node(){
             children=new Node[26];
-            isLast=true;
             score=0;
         }
     }
