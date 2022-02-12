@@ -11,20 +11,24 @@ class MapSum {
         }
     }
     Node root;
+    Map<String,Integer> map=new HashMap<>();
     public MapSum() {
         root=new Node();
     }
     
     public void insert(String key, int val) {
         
+        int val1=val;
+        val=val-map.getOrDefault(key,0);
+        map.put(key,val1);
         Node r=root;
         for(char ch:key.toCharArray()){
             if(r.children[ch-'a']==null){
                 r.children[ch-'a']=new Node();
             }
             r=r.children[ch-'a'];
+            r.score+=val;
         }
-        r.score=val;
     }
     
     public int sum(String prefix) {
@@ -33,16 +37,7 @@ class MapSum {
             r=r.children[ch-'a'];
             if(r==null) return 0;
         }
-        return find(r);
-    }
-    int find(Node r){
-        if(r==null) return 0;
-        int ans=r.score;
-        
-        for(int i=0;i<26;i++){
-            ans+=find(r.children[i]);
-        }
-        return ans;
+        return r.score;
     }
 }
 
