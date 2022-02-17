@@ -19,6 +19,7 @@ class Solution {
     void add(TreeNode node ){
         if(head==null) head=tail=node;
         else{
+            node.left=null;
             tail.right=node;
             tail=tail.right;
         }
@@ -33,11 +34,11 @@ class Solution {
             int s=q.size();
             while(s-->0){
                 TreeNode n=q.remove();
+                 if(n.left!=null) q.add(n.left);
+                if(n.right!=null) q.add(n.right);
                 if(s==0){
                     add(n);
                 }
-                if(n.left!=null) q.add(n.left);
-                if(n.right!=null) q.add(n.right);
             }
         }
         
