@@ -19,18 +19,29 @@ class Node {
 */
 
 class Solution {
-    public Node cloneGraph(Node node) {
-	return (node == null) ? null : cloneGraph(node, new HashMap<>());
-}
-
-private Node cloneGraph(Node node, Map<Integer, Node> nodeByVal) {
-	if (nodeByVal.containsKey(node.val))
-		return nodeByVal.get(node.val);
-
-	var clone = nodeByVal.computeIfAbsent(node.val, k -> new Node(node.val));
-	for (var neighbor : node.neighbors)
-		clone.neighbors.add(cloneGraph(neighbor, nodeByVal));
-		
-	return clone;
-}
+    public Node cloneGraph(Node node)
+    {
+        if(node==null) return null;
+        Map<Integer,Node> map=new HashMap<>();
+        map.put(node.val,new Node(node.val));
+        clone(map,node,map.get(node.val));
+        return map.get(node.val);
+    }
+    void clone(Map<Integer,Node> map,Node node,Node root)
+    {
+        for(Node n1:node.neighbors)
+        {
+            if(map.containsKey(n1.val))
+            {
+                root.neighbors.add(map.get(n1.val));
+            }
+            else
+            {
+                Node a=new Node(n1.val);
+                map.put(n1.val,a);
+                root.neighbors.add(a);
+                clone(map,n1,a);
+            }
+        }
+    }
 }
