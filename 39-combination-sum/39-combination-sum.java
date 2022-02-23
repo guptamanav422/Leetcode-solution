@@ -1,23 +1,26 @@
 class Solution {
-    List<List<Integer>>  ans;
-    public List<List<Integer>> combinationSum(int[] candidates, int target) {
-        ans=new ArrayList<>();
+    public List<List<Integer>> combinationSum(int[] candidates, int target)
+    {
+        List<List<Integer>> list=new ArrayList<>();
         
-        find(candidates,target,0,new ArrayList<>());
-        return ans;
+        if(candidates.length==0 || target<=0) return list;
+        
+        combinationSumHelper(candidates,0,target,new ArrayList<>(),list);
+        return list;
     }
-    void find(int arr[],int tar,int i,List<Integer> temp){
-        if(i==arr.length || tar<0) return;
+    void combinationSumHelper(int arr[],int start,int tar,List<Integer> temp,List<List<Integer>> ans){
         
         if(tar==0){
             ans.add(new ArrayList<>(temp));
             return;
         }
         
-        temp.add(arr[i]);
-        find(arr,tar-arr[i],i,temp);
-        temp.remove(temp.size()-1);
-        
-        find(arr,tar,i+1,temp);
+        for(int i=start;i<arr.length;i++){
+            if(arr[i]>tar) continue;
+            
+            temp.add(arr[i]);
+            combinationSumHelper(arr,i,tar-arr[i],temp,ans);
+            temp.remove(temp.size()-1);
+        }
     }
 }
