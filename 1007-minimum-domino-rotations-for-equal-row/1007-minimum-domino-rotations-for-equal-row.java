@@ -1,16 +1,22 @@
 class Solution {
-   public int minDominoRotations(int[] A, int[] B) {
-        int[] countA = new int[7], countB = new int[7], same = new int[7];
-        int n = A.length;
-        for (int i = 0; i < n; ++i) {
-            countA[A[i]]++;
-            countB[B[i]]++;
-            if (A[i] == B[i])
-                same[A[i]]++;
+    public int minDominoRotations(int[] tops, int[] bottoms) {
+        
+        int ans=Math.min(find(tops[0],tops,bottoms),find(bottoms[0],tops,bottoms));
+        // System.out.println(ans);
+        ans=Math.min(ans,Math.min(find(tops[0],bottoms,tops),find(bottoms[0],bottoms,tops)));
+        
+        return ans==Integer.MAX_VALUE?-1:ans;
+    }
+    int find(int i,int tops[],int bottoms[]){
+        int c=-1,n=tops.length;
+        for(int j=0;j<n;j++){
+
+            if(tops[j]==i) c=c;
+            else if(bottoms[j]==i) c++;
+            else break;
+            
+            if(j==n-1) return c+1;
         }
-        for (int i  = 1; i < 7; ++i)
-            if (countA[i] + countB[i] - same[i] == n)
-                return n - Math.max(countA[i], countB[i]);
-        return -1;
+        return Integer.MAX_VALUE;
     }
 }
