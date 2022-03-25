@@ -1,25 +1,27 @@
 class Solution {
     class pair{
-        int idx,num;
+        int ind,val;
         pair(int a,int b){
-            idx=a;
-            num=b;
+            ind=a;
+            val=b;
         }
     }
     List<Integer> list=new ArrayList<>();
     public List<Integer> countSmaller(int[] nums) {
-        
+       
         int n=nums.length;
+        
         pair arr[]=new pair[n];
         for(int i=0;i<n;i++){
             arr[i]=new pair(i,nums[i]);
             list.add(0);
         }
+        
         mergeSort(arr,0,n-1);
         return list;
     }
     void mergeSort(pair arr[],int s,int e){
-        if(s>=e) return ;
+        if(s>=e) return;
         
         int m=(s+e)/2;
         mergeSort(arr,s,m);
@@ -27,32 +29,32 @@ class Solution {
         merge(arr,s,m,e);
     }
     void merge(pair arr[],int s,int m,int e){
-        
         pair ans[]=new pair[e-s+1];
-        int i=m,j=e,k=e-s;
-        while(i>=s || j>m){
-            if(i<s){
-                // int idx=arr[i].idx;
-                // list.set(idx,list.get(idx)+e-m);
-                ans[k--]=arr[j--];
-            }
-            else if(j==m){
-                ans[k--]=arr[i--];
+        int i=s,j=m+1;
+        int k=0;
+        while(i<=m && j<=e){
+            if(arr[i].val<=arr[j].val){
+                int ind=arr[i].ind;
+                int num=k-i+s;
+                list.set(ind,list.get(ind)+num);
+                ans[k++]=arr[i++];
             }
             else{
-                if(arr[i].num>arr[j].num){
-                    int idx=arr[i].idx;
-                    list.set(idx,list.get(idx)+(j-m));
-                    ans[k--]=arr[i--];
-                }
-                else{
-                    ans[k--]=arr[j--];
-                }
+               ans[k++]=arr[j++];
             }
         }
+        while(i<=m){
+            int ind=arr[i].ind;
+            int num=k-i+s;
+            list.set(ind,list.get(ind)+e-m);
+            ans[k++]=arr[i++];
+        }
+        while(j<=e){
+           ans[k++]=arr[j++]; 
+        }
+        k=0;
         for(i=s;i<=e;i++){
-            arr[i]=ans[i-s];
+            arr[i]=ans[k++];
         }
     }
-    
 }
