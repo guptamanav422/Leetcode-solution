@@ -35,8 +35,8 @@ class Solution {
         while(i<=m && j<=e){
             if(arr[i].val<=arr[j].val){
                 int ind=arr[i].ind;
-                int num=k-i+s;
-                list.set(ind,list.get(ind)+num);
+                // int num=k-i+s;
+                list.set(ind,list.get(ind)+j-m-1);
                 ans[k++]=arr[i++];
             }
             else{
@@ -45,7 +45,6 @@ class Solution {
         }
         while(i<=m){
             int ind=arr[i].ind;
-            int num=k-i+s;
             list.set(ind,list.get(ind)+e-m);
             ans[k++]=arr[i++];
         }
