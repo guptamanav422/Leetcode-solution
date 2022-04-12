@@ -13,10 +13,11 @@ class Solution {
                 if(i!=0) matrix[i][j]+=matrix[i-1][j];
                 list.add(matrix[i][j]);
             }
-            Collections.sort(list,Collections.reverseOrder());
+            Collections.sort(list);
             
-            for(int j=0;j<list.size();j++){
-                ans=Math.max(ans,list.get(j)*(j+1));
+            int ss=list.size();
+            for(int j=1;j<=ss;j++){
+                ans=Math.max(ans,list.get(ss-j)*(j));
             }
         }
         return ans;
