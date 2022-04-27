@@ -34,7 +34,6 @@ public:
                 if(d==0) d=1;
                 
                 int abc=a*b*d;
-                // System.out.println(sb+" "+abc);
                 if(abc<ans){
                     res=sb;
                     ans=abc;
