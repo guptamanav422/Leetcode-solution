@@ -13,6 +13,9 @@ class Solution {
     } 
     int find(int arr[],int l,int r){
         
+        Random rn= new Random();
+        int num=rn.nextInt(r-l+1);
+        swap(arr,r,l+num);
         int s=l,i=s;
         while(i<r){
             if(arr[i]<=arr[r]){
