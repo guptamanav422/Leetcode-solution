@@ -11,8 +11,9 @@ class Solution {
                 
                 int c=0;
                 while(set.contains(a)) {
-                    set.remove(a++);
+                    // set.remove(a++);
                     c++;
+                    a++;
                 }
                 ans=Math.max(ans,c);
             }
