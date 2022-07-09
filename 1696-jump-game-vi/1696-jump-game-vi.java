@@ -1,16 +1,18 @@
 class Solution {
     public int maxResult(int[] nums, int k) {
         
-        PriorityQueue<int []> pq=new PriorityQueue<>((int a[],int b[])->(b[1]-a[1]));
-        
-        pq.add(new int[]{0,nums[0]});
-        int ans=nums[0];
-        for(int i=1;i<nums.length;i++){
+        Deque<Integer> q=new ArrayDeque<>();
+        for(int i=0;i<nums.length;i++){
             
-            while((i-pq.peek()[0])>k) pq.remove();
-            ans=nums[i]+pq.peek()[1];
-            pq.add(new int[]{i,ans});
+            while(!q.isEmpty() && (i-q.peek())>k) q.remove();
+            // if(i==4){
+            //     System.out.println(q.peek());
+            // }
+            nums[i]+=(q.isEmpty())?0:(nums[q.peek()]);            
+            while(!q.isEmpty() && nums[i]>nums[q.peekLast()]) q.removeLast();
+            // System.out.print(nums[i]+" ");
+            q.add(i);
         }
-        return ans;
+        return nums[nums.length-1];
     }
 }
