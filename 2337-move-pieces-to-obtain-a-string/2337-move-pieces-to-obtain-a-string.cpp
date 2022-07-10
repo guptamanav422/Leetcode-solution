@@ -5,7 +5,7 @@ public:
         if(n!=m) return false;
     
         int a=0,b=0,i=0,j=0;
-        while(i<n && j<n){
+        while(i<n || j<n){
             
             while(i<n && tar[i]=='_') i++;
             while(j<n && st[j]=='_') j++;
@@ -26,8 +26,6 @@ public:
             i++;
             j++;
         }
-        while(i<n && tar[i]=='_') i++;
-        while(j<n && st[j]=='_') j++;
         return i==n && j==n;
     }
 };
