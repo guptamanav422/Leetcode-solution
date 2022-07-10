@@ -26,6 +26,8 @@ public:
             i++;
             j++;
         }
-        return true;
+        while(i<n && tar[i]=='_') i++;
+        while(j<n && st[j]=='_') j++;
+        return i==n && j==n;
     }
 };
