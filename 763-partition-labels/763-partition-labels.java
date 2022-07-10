@@ -3,35 +3,19 @@ class Solution {
         
         List<Integer> ans=new ArrayList<>();
         
-        int hash[]=new int[26];
-        for(char ch:s.toCharArray()){
-            hash[ch-'a']++;
+        int hash[]=new int[26],n=s.length();
+        for(int i=0;i<n;i++){
+            hash[s.charAt(i)-'a']=i;
         }
         
-        int c=0;
-        int arr[]=new int[26];
-        for(char ch:s.toCharArray()){
-            
-            c++;
-            hash[ch-'a']--;
-            arr[ch-'a']=1;
-            if(hash[ch-'a']==0){
-                boolean flag=true;
-                for(int i=0;i<26;i++){
-                    if(arr[i]!=0 && hash[i]!=0){
-                        flag=false;
-                        break;
-                    }
-                }
-                
-                if(flag){
-                    ans.add(c);
-                    c=0;
-                    arr=new int[26];
-                }
+        int max=0,p=-1;
+        for(int i=0;i<n;i++){
+            max=Math.max(max,hash[s.charAt(i)-'a']);
+            if(max==i){
+                ans.add(i-p);
+                p=i;
             }
         }
-        if(c!=0) ans.add(c);
         return ans;
     }
 }
