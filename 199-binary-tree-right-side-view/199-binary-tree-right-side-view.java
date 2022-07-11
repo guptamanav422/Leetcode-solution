@@ -14,16 +14,6 @@
  * }
  */
 class Solution {
-    TreeNode head=null,tail=null;
-    
-    void add(TreeNode node ){
-        if(head==null) head=tail=node;
-        else{
-            node.left=null;
-            tail.right=node;
-            tail=tail.right;
-        }
-    }
     public List<Integer> rightSideView(TreeNode root)
     {
         if(root==null) return new ArrayList<>();
@@ -37,14 +27,9 @@ class Solution {
                  if(n.left!=null) q.add(n.left);
                 if(n.right!=null) q.add(n.right);
                 if(s==0){
-                    add(n);
+                    ans.add(n.val);
                 }
             }
-        }
-        
-        while(head!=null){
-            ans.add(head.val);
-            head=head.right;
         }
         return ans;
     }
