@@ -1,20 +1,20 @@
 class Solution {
     public long wonderfulSubstrings(String word) {
         
-        Map<Integer,Integer> m1=new HashMap<>();
+        int arr[]=new int[2000];
         
         long ans=0;
         int num=0;
-        m1.put(0,1);
+        arr[0]++;
         for(char ch:word.toCharArray()){
             
             num^=1<<(ch-'a');
-            ans+=m1.getOrDefault(num,0);
+            ans+=arr[num];
             
             for(int i=0;i<=9;i++){
-                ans+=m1.getOrDefault((num^(1<<i)),0);
+                ans+=arr[num^(1<<i)];
             }
-            m1.put(num,m1.getOrDefault(num,0)+1);
+            arr[num]++;
             
         }
         return ans;
