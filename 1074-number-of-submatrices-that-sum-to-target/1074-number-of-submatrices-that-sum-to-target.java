@@ -6,14 +6,12 @@ class Solution {
         for(int i=0;i<n;i++){
             int arr[]=new int[m];
             for(int j=i;j<n;j++){
-                for(int k=0;k<m;k++){
-                    arr[k]+=matrix[j][k];
-                }
                 Map<Integer,Integer> map=new HashMap<>();
                 map.put(0,1);
                 int a=0;
-                for(int aa:arr){
-                    a+=aa;
+                for(int k=0;k<m;k++){
+                    arr[k]+=matrix[j][k];
+                    a+=arr[k];
                     ans+=map.getOrDefault(a-target,0);
                     map.put(a,map.getOrDefault(a,0)+1);
                 }
