@@ -3,10 +3,11 @@ class Solution {
         
         int n=matrix.length,m=matrix[0].length;
         int ans=0;
+        Map<Integer,Integer> map=new HashMap<>();
         for(int i=0;i<n;i++){
             int arr[]=new int[m];
             for(int j=i;j<n;j++){
-                Map<Integer,Integer> map=new HashMap<>();
+                map.clear();
                 map.put(0,1);
                 int a=0;
                 for(int k=0;k<m;k++){
