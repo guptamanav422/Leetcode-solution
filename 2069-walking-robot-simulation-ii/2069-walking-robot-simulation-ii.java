@@ -14,9 +14,7 @@ class Robot {
         
         long temp=(h-1)*2 +(w-1)*2;
         num=(int)((long)num%(temp));
-        if (num == 0) num = w * 2 + h * 2 - 4;
-        
-        if(num==0){
+        if (x == 0 && y == 0){
             dir="South";
         }
         while(num-->0){
