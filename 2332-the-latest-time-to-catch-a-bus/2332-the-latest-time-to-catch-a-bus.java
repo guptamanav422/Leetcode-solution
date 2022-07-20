@@ -4,30 +4,26 @@ class Solution {
         Arrays.sort(bus);
         Arrays.sort(pas);
         
-        int j=0,n=pas.length;
+        int i=0,ans=0;
         Set<Integer> set=new HashSet<>();
-        for(int a:pas){
-            set.add(a);
-        }
-        int ans=0;
-        for(int i=0;i<bus.length;i++){
+        for(int a:bus){
             
             int c=0;
-            
-            while(j<n && c<cap && pas[j]<=bus[i]){
-                
-                if(!set.contains(pas[j]-1)) ans=pas[j]-1;
-                j++;
+            while(i<pas.length && c<cap && pas[i]<=a){
+                set.add(pas[i]);
+                // if(!set.contains(pas[i]-1)) ans=pas[i]-1;
                 c++;
+                i++;
             }
-            
-            
-            if(c<cap){
-                while(set.contains(bus[i])){
-                    bus[i]--;
+            a=(c==cap)?pas[i-1]:a;
+            while(a>0){
+                if(!set.contains(a)){
+                    ans=a;
+                    break;
                 }
-                ans=bus[i];
+                a--;
             }
+            
         }
         return ans;
     }
