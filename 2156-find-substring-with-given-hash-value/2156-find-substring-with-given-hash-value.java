@@ -1,24 +1,28 @@
 class Solution {
     public String subStrHash(String s, int power, int modulo, int k, int hashValue) {
         
-        long num=0,temp=1;
-        for(int i=1;i<k;i++){
-            temp=(temp*power)%modulo;
+        
+        long num=1;
+        for(int i=0;i<k;i++){
+            num=(num*power)%modulo;
         }
-        int n=s.length();
-        for(int i=n-1;i>=n-k;i--){
-            num=(num*power+(s.charAt(i)-'a'+1))%modulo;
+        
+        int ans=0,n=s.length();
+        long val=0;
+        for(int i=n-1;i>=(n-k);i--){
+            val=((val*power)%modulo + (s.charAt(i)-'a'+1))%modulo;
         }
-        int st=-1;
-        if(num==hashValue) st=n-k;
-        // System.out.print(num+" ");
-        for(int i=n-k-1;i>=0;i--){
+        // System.out.println(val);
+        
+        if(val==hashValue) ans=n-1;
+        
+        for(int i=s.length()-2;i>=(k-1);i--){
+            int j=i-k+1;
+            val=((val*power) + (s.charAt(j)-'a'+1) -((s.charAt(i+1)-'a'+1)*num))%modulo;
+            val=(val+modulo)%modulo;
             
-            num=(((num-((s.charAt(i+k)-'a'+1)*temp)%modulo)*power)%modulo + (s.charAt(i)-'a'+1))%modulo;
-            if(num<0) num+=modulo;
-            // System.out.print(num+" ");
-            if(num==hashValue) st=i;
+            if(val==hashValue) ans=i;
         }
-        return s.substring(st,st+k);
+        return s.substring(ans-k+1,ans+1);
     }
 }
