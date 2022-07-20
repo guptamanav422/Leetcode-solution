@@ -7,8 +7,8 @@ class Solution {
             if(nums[i-1]>nums[i]){
                 c++;
                 
-                if(i==1 || nums[i-2]<=nums[i]){
-                    nums[i-1]=nums[i];
+                if((i==1 || nums[i-2]<=nums[i])){
+                    continue;
                 }
                 else nums[i]=nums[i-1];
             }
