@@ -18,21 +18,25 @@ class Solution {
     }
     void find(int i,int n,List<String> list){
         
-        if(i==n) {
-            ans.add(new ArrayList<>(list));
-            return;
-        }
+       if(i==n){
+           ans.add(new ArrayList<>(list));
+           return;
+       }
         
+        StringBuilder temp=new StringBuilder(sb);
         for(int j=0;j<n;j++){
-            if(col[j] || leftDia[i+j] || rightDia[n-1-i+j]) continue;
-             
-            col[j] = leftDia[i+j] = rightDia[n-1-i+j]=true;
-            StringBuilder ss=new StringBuilder(sb);
-            ss.setCharAt(j,'Q');
-            list.add(ss.toString());
-            find(i+1,n,list);
-            list.remove(list.size()-1);
-            col[j] = leftDia[i+j] = rightDia[n-1-i+j]=false;
+            
+            if(!col[j] && !leftDia[i+j] && !rightDia[n-1-i+j]){
+                temp.setCharAt(j,'Q');
+                list.add(temp.toString());
+                col[j]=leftDia[i+j]=rightDia[n-1-i+j]=true;
+                find(i+1,n,list);
+                col[j]=leftDia[i+j]=rightDia[n-1-i+j]=false;
+                list.remove(list.size()-1);
+                temp.setCharAt(j,'.');
+            }
+            
         }
+    
     }
 }
