@@ -8,11 +8,11 @@ class Solution {
             map.put(str,map.getOrDefault(str,0)+1);
         }
         int one=words[0].length();
-        for(int i=0;i<=(len-one*n);i++){
+        for(int i=0;i<len;i++){
             Map<String,Integer> temp=new HashMap<>();
             int c=0;
             int j=i;
-            while(c<n){
+            while(c<n && i+one<=len){
                 String str=s.substring(i,i+one);
                 temp.put(str,temp.getOrDefault(str,0)+1);
                 
