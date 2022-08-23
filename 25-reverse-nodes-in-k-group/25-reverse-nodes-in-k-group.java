@@ -9,27 +9,20 @@
  * }
  */
 class Solution {
-    public ListNode reverseKGroup(ListNode head, int k) {
-        if(head==null) return null;
-        int n=k;
-        ListNode curr=head,next=null,prev=null;
-        while(n-->0 && curr!=null){
+    public ListNode reverseKGroup(ListNode node, int k) {
+        ListNode prev=null,curr=node,next=null;
+        
+        int t=k;
+        while(t-->0 && curr!=null){
             next=curr.next;
             curr.next=prev;
             prev=curr;
             curr=next;
         }
-        // if(next!=null)
-        // System.out.println(n);
-        // prev.next=null;
-        if(n==-1){
-            // System.out.println(prev.val);
-            head.next=reverseKGroup(next,k);
-            return prev;
-        }
-        else{
+        
+        if(t!=-1){
+       
             curr=prev;
-            next=null;
             prev=null;
             while(curr!=null){
                 next=curr.next;
@@ -37,7 +30,11 @@ class Solution {
                 prev=curr;
                 curr=next;
             }
+            return prev;
         }
-        return head;
+        else{
+            node.next=reverseKGroup(curr,k);
+            return prev;
+        }
     }
 }
