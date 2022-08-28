@@ -14,27 +14,28 @@
  * }
  */
 class Solution {
+    class pair{
+        int left,right;
+        pair(int left,int right){
+            this.left=left;
+            this.right=right;
+        }
+    }
     int ans=0;
     public int longestZigZag(TreeNode root) {
-        ans=0;
-        find(root);
+        
+       longestZigZapHelper(root);
         return ans;
     }
-    
-   int[] find(TreeNode root){
-        if(root==null) return new int[]{-1,-1};
+    public pair longestZigZapHelper(TreeNode root){
         
-        int left[]=find(root.left);
-        int right[]=find(root.right);
+        if(root==null) return new pair(-1,-1);
         
-        int a[]=new int[]{left[1]+1,right[0]+1};
-        ans=Math.max(ans,Math.max(a[0],a[1]));
-        return a;
+        pair leftChild=longestZigZapHelper(root.left);
+        pair rightChild=longestZigZapHelper(root.right);
+        
+        pair res=new pair(leftChild.right+1,rightChild.left+1);
+        ans=Math.max(ans,Math.max(res.left,res.right));
+        return res;
     }
 }
-
-
-
-
-
-
