@@ -1,6 +1,9 @@
 class Solution {
+    int low[],dis[],time=1;
+    List<Integer>[] graph;
+    List<List<Integer>> ans;
     public List<List<Integer>> criticalConnections(int n, List<List<Integer>> connections) {
-        List<Integer>[] graph = new ArrayList[n];
+        graph= new ArrayList[n];
         for (int i = 0; i < n; i++) {
             graph[i] = new ArrayList<>();
         }
@@ -8,31 +11,34 @@ class Solution {
             graph[oneConnection.get(0)].add(oneConnection.get(1));
             graph[oneConnection.get(1)].add(oneConnection.get(0));
         }
-        HashSet<List<Integer>> connectionsSet = new HashSet<>(connections);
-        int[] rank = new int[n];
-        Arrays.fill(rank, -2);
-        dfs(graph, 0, 0, rank, connectionsSet);
-        return new ArrayList<>(connectionsSet);
+        low=new int[n];
+        dis=new int[n];
+        ans=new ArrayList<>();
+        time=1;
+        dfs(0,-1);
+        return ans;
     }
     
-    int dfs(List<Integer>[] graph, int node, int depth, int[] rank, HashSet<List<Integer>> connectionsSet){
-        if (rank[node]>=0){
-            return rank[node]; // already visited node. return its rank
-        }
-        rank[node] = depth;
-        int minDepthFound = depth; // can be Integer.MAX_VALUE also.
-        for(Integer neighbor: graph[node]){
-            if (rank[neighbor] == depth-1){ // ignore parent
-                continue;
+    void dfs(int node,int par){
+        
+        dis[node]=low[node]=time++;
+        
+        for(int neighbor: graph[node]){
+            if (dis[neighbor] == 0){ // ignore parent
+                dfs(neighbor,node);
+                
+                low[node]=Math.min(low[node],low[neighbor]);
+                
+                if(low[neighbor]>dis[node]){
+                    List<Integer> temp=new ArrayList<>();
+                    temp.add(node);
+                    temp.add(neighbor);
+                    ans.add(temp);
+                }
             }
-            int minDepth = dfs(graph, neighbor, depth+1, rank, connectionsSet);
-            minDepthFound = Math.min(minDepthFound, minDepth);
-            if (minDepth <= depth){
-                // to avoid the sorting just try to remove both combinations. of (x,y) and (y,x)
-                connectionsSet.remove(Arrays.asList(node, neighbor)); 
-                connectionsSet.remove(Arrays.asList(neighbor, node)); 
+            else if(neighbor!=par){
+                low[node]=Math.min(low[node],low[neighbor]);
             }
         }
-        return minDepthFound;
     }
 }
