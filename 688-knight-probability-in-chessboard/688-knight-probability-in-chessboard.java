@@ -1,24 +1,24 @@
 class Solution {
+    
     int dir[][]={{-2,-1},{-2,1},{-1,2},{1,2},{2,1},{2,-1},{1,-2},{-1,-2}};
+    
     double dp[][][];
     public double knightProbability(int n, int k, int row, int column) {
         
         dp=new double[n][n][k+1];
-        return find(row,column,n,k);
+        return find(n,k,row,column);
     }
-    double find(int r,int c,int n,int k){
-        
-        double ans=0;
+    double find(int n,int k,int row,int column){
+        if(row<0 || column<0 || row>=n || column>=n) return 0.0;
         if(k==0) return 1.0;
-        if(dp[r][c][k]!=0.0d) return dp[r][c][k];
-        for(int arr[]:dir){
-            
-            int r1=r+arr[0],c1=c+arr[1];
-            
-            if(r1<0 || c1<0 || r1>=n || c1>=n) continue;
-            
-            ans+=find(r1,c1,n,k-1)/8;
+        
+        if(dp[row][column][k]!=0.0d) return dp[row][column][k];
+        System.out.println(dp[row][column][k]);
+        double ans=0.0;
+        for(int i=0;i<8;i++){
+            ans+=((double)(find(n,k-1,row+dir[i][0],column+dir[i][1])))/(double)8.0;
         }
-        return dp[r][c][k]=ans;
+        
+        return dp[row][column][k]=ans;
     }
 }
