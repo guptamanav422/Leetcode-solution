@@ -15,6 +15,8 @@ public:
         sort(vec.begin(),vec.end());
         
         int j=0,k=1,n=s.length();
+        
+        if((n+1)/2<vec[vec.size()-1].first) return "";
         bool ok=1;
         for(int i=vec.size()-1;i>=0 && ok;i--){
             
@@ -32,6 +34,6 @@ public:
                 }
             }
         }
-        return ok?s:"";
+        return s;
     }
 };
