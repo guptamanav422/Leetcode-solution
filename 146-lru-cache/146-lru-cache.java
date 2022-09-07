@@ -1,62 +1,79 @@
 class LRUCache {
 
     class Node{
-        int key,val;
-        Node next,prev;
-        Node(int a,int b){
-            key=a;
-            val=b;
-        }
+        Node prev,next;
+        int data;
+        int key;
     }
-    Map<Integer,Node> map=new HashMap<>();
-    int cap=0,count=0;
-    Node head=null,tail=null;
+    Node head,tail;
+    Map<Integer,Node> map;
+    int c;
+    int count;
     public LRUCache(int capacity) {
-        cap=capacity;
+        map=new HashMap<>();
+        c=capacity;
+        count=0;
     }
     
     public int get(int key) {
         if(!map.containsKey(key)) return -1;
-        
-        Node node=map.get(key);
-        if(node!=head){
-            node.prev.next=node.next;
-            if(node.next!=null) node.next.prev=node.prev;
-            else tail=node.prev;
-            node.next=head;
-            head.prev=node;
-            node.prev=null;
-            head=node;
+        Node n=map.get(key);
+        if(tail==n){
+            return n.data;
         }
-        return node.val;
-    }
-    
-    public void put(int key, int value) {
-        
-        if(map.containsKey(key)){
-            map.get(key).val=value;
-            get(key);
+        else if(n==head){
+            head=head.next;
+            head.prev=null;
         }
         else{
-            Node temp=new Node(key,value);
+            Node pre=n.prev;
+            Node nex=n.next;
+            pre.next=nex;
+            nex.prev=pre;
+        }
+        n.next=null;
+        tail.next=n;
+        n.prev=tail;
+        tail=n;
+        return n.data;
+    }
+    
+    public void put(int key, int value)
+    {
+        if(map.containsKey(key)){
+            get(key);
+            tail.data=value;
+        }
+        else if(count<c){
+            Node n=new Node();
+            n.data=value;
+            n.key=key;
             if(head==null){
-                head=tail=temp;
+                head=tail=n;
             }
             else{
-                temp.next=head;
-                head.prev=temp;
-                head=temp;
+                tail.next=n;
+                n.prev=tail;
+                tail=n;
             }
-            if(count==cap){
-                
-                map.remove(tail.key);
-                tail=tail.prev;
-                tail.next=null;
-            }
-            else count++;
-            
-            map.put(key,temp);
+            map.put(key,n);
+            count++;
         }
+        else{
+            map.remove(head.key);
+            if(head==tail){
+                head=tail=null;
+            }
+            else{
+                head=head.next;
+                head.prev=null;
+            }
+            count--;
+            put(key,value);
+        }
+        // if(key==4){
+        //         System.out.println(head.data+" "+head.key);
+        //     }
     }
 }
 
