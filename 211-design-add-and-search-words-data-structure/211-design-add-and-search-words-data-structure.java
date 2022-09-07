@@ -27,19 +27,16 @@ class WordDictionary {
     
     public boolean search(String word) {
         
-        return check(word,0,word.length(),root);
+        return check(word,root,0);
     }
-    boolean check(String word,int i,int n,Node temp){
-      
+    boolean check(String str,Node temp,int i){
         if(temp==null) return false;
-        if(i==n) return temp.isLast;
+        if(i==str.length()) return temp.isLast;
         
-        if(word.charAt(i)=='.'){
-            for(int j=0;j<26;j++){
-                if(check(word,i+1,n,temp.children[j])) return true;
-            }
+        if(str.charAt(i)!='.') return check(str,temp.children[str.charAt(i)-'a'],i+1);
+        for(int j=0;j<26;j++){
+            if(check(str,temp.children[j],i+1)) return true;
         }
-        else return check(word,i+1,n,temp.children[word.charAt(i)-'a']);
         return false;
     }
 }
