@@ -15,14 +15,6 @@ class Solution {
             left[i]=prev1;
             right[j]=prev2;
         }
-        // for(int a:left){
-        //     System.out.print(a+" ");
-        // }
-        // System.out.println();
-        // for(int a:right){
-        //     System.out.print(a+" ");
-        // }
-        // System.out.println();
         StringBuffer sb=new StringBuffer();
         for(int i=0;i<n;i++){
             
